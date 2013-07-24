@@ -614,6 +614,7 @@ PHP_MINIT_FUNCTION(svn)
 	REGISTER_LONG_CONSTANT("SVN_REVISION_COMMITTED", SVN_REVISION_COMMITTED, CONST_CS|CONST_PERSISTENT);
 	REGISTER_LONG_CONSTANT("SVN_REVISION_PREV", SVN_REVISION_PREV, CONST_CS|CONST_PERSISTENT);
 	REGISTER_LONG_CONSTANT("SVN_REVISION_UNSPECIFIED", SVN_REVISION_UNSPECIFIED, CONST_CS|CONST_PERSISTENT);
+	REGISTER_LONG_CONSTANT("SVN_REVISION_WORKING", SVN_REVISION_WORKING, CONST_CS|CONST_PERSISTENT);
 
 	REGISTER_LONG_CONSTANT("SVN_NON_RECURSIVE", SVN_NON_RECURSIVE, CONST_CS|CONST_PERSISTENT);   /* --non-recursive */
 	REGISTER_LONG_CONSTANT("SVN_DISCOVER_CHANGED_PATHS", SVN_DISCOVER_CHANGED_PATHS, CONST_CS|CONST_PERSISTENT);    /* --verbose */
@@ -1237,14 +1238,18 @@ PHP_FUNCTION(svn_diff)
 	}
 	RETVAL_FALSE;
 
-	if (rev1 <= 0) {
+	if (rev1 == SVN_REVISION_HEAD) {
 		revision1.kind = svn_opt_revision_head;
+	} else if (rev1 == SVN_REVISION_WORKING) {
+		revision1.kind = svn_opt_revision_working;
 	} else {
 		revision1.kind = svn_opt_revision_number;
 		revision1.value.number = rev1;
 	}
-	if (rev2 <= 0) {
+	if (rev2 == SVN_REVISION_HEAD) {
 		revision2.kind = svn_opt_revision_head;
+	} else if (rev2 == SVN_REVISION_WORKING) {
+		revision2.kind = svn_opt_revision_working;
 	} else {
 		revision2.kind = svn_opt_revision_number;
 		revision2.value.number = rev2;

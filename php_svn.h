@@ -127,6 +127,7 @@ PHP_FUNCTION(svn_uuid_from_path);
 #define SVN_REVISION_COMMITTED -3
 #define SVN_REVISION_PREV -4
 #define SVN_REVISION_UNSPECIFIED -5
+#define SVN_REVISION_WORKING -6
 
 #define SVN_NON_RECURSIVE 1 /* --non-recursive */
 #define SVN_DISCOVER_CHANGED_PATHS 2 /* --verbose */
