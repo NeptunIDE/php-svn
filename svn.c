@@ -1740,14 +1740,18 @@ PHP_FUNCTION(svn_diff)
 	}
 	RETVAL_FALSE;
 
-	if (rev1 <= 0) {
+	if (rev1 == SVN_REVISION_HEAD) {
 		revision1.kind = svn_opt_revision_head;
+	} else if (rev1 == SVN_REVISION_WORKING) {
+		revision1.kind = svn_opt_revision_working;
 	} else {
 		revision1.kind = svn_opt_revision_number;
 		revision1.value.number = rev1;
 	}
-	if (rev2 <= 0) {
+	if (rev2 == SVN_REVISION_HEAD) {
 		revision2.kind = svn_opt_revision_head;
+	} else if (rev2 == SVN_REVISION_WORKING) {
+		revision2.kind = svn_opt_revision_working;
 	} else {
 		revision2.kind = svn_opt_revision_number;
 		revision2.value.number = rev2;
